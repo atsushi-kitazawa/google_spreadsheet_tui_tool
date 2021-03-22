@@ -16,4 +16,4 @@ google_spreadsheet_tui_tool
 # vendor/
 
 # Google API Credentials
-credentials.json
+*.json
