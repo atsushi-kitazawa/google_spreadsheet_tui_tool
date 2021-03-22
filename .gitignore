@@ -4,6 +4,7 @@
 *.dll
 *.so
 *.dylib
+google_spreadsheet_tui_tool
 
 # Test binary, built with `go test -c`
 *.test
