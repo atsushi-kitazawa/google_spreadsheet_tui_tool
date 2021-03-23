@@ -6,12 +6,16 @@ import (
 	"log"
 
 	"github.com/atsushi-kitazawa/google_spreadsheet_tui_tool/google_auth"
+	"github.com/atsushi-kitazawa/google_spreadsheet_tui_tool/google_drive"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/sheets/v4"
 )
 
 func main() {
-        b, err := ioutil.ReadFile("credentials.json")
+    google_drive.DriveSample()
+    return
+
+        b, err := ioutil.ReadFile("sheet_credentials.json")
         if err != nil {
                 log.Fatalf("Unable to read client secret file: %v", err)
         }
@@ -21,7 +25,7 @@ func main() {
         if err != nil {
                 log.Fatalf("Unable to parse client secret file to config: %v", err)
         }
-	client := google_auth.GetClient(config)
+	client := google_auth.GetSheetClient(config)
 
         srv, err := sheets.New(client)
         if err != nil {
