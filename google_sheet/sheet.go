@@ -12,9 +12,8 @@ import (
 
 const credential = "sheet_credentials.json"
 const token = "sheet_token.json"
-const target = "google spreadsheet tui tool"
 
-func ReadSheet(spreadsheetId string) {
+func ReadSheet(spreadsheetId string, readRange string) {
 	b, err := ioutil.ReadFile(credential)
 	if err != nil {
 		log.Fatalf("Unable to read client secret file: %v", err)
@@ -32,7 +31,6 @@ func ReadSheet(spreadsheetId string) {
 		log.Fatalf("Unable to retrieve Sheets client: %v", err)
 	}
 
-	readRange := "管理!B5:I30"
 	resp, err := srv.Spreadsheets.Values.Get(spreadsheetId, readRange).Do()
 	if err != nil {
 		log.Fatalf("Unable to retrieve data from sheet: %v", err)
