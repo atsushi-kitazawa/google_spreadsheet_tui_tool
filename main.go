@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -30,5 +31,14 @@ func main() {
 		log.Fatal("target file not found.")
 	}
 
-	google_sheet.ReadSheet(spreadsheetId, rangeRead)
+	valRange := google_sheet.ReadSheet(spreadsheetId, rangeRead)
+
+	if len(valRange.Values) == 0 {
+		fmt.Println("No data found.")
+	} else {
+		fmt.Println("No, 大項目")
+		for _, row := range valRange.Values {
+			fmt.Printf("size=%d, %s, %s\n", len(row), row[0], row[1])
+		}
+	}
 }

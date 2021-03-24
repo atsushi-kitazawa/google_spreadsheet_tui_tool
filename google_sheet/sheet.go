@@ -1,7 +1,6 @@
 package google_sheet
 
 import (
-	"fmt"
 	"io/ioutil"
 	"log"
 
@@ -13,7 +12,7 @@ import (
 const credential = "sheet_credentials.json"
 const token = "sheet_token.json"
 
-func ReadSheet(spreadsheetId string, readRange string) {
+func ReadSheet(spreadsheetId string, readRange string) *sheets.ValueRange {
 	b, err := ioutil.ReadFile(credential)
 	if err != nil {
 		log.Fatalf("Unable to read client secret file: %v", err)
@@ -36,12 +35,5 @@ func ReadSheet(spreadsheetId string, readRange string) {
 		log.Fatalf("Unable to retrieve data from sheet: %v", err)
 	}
 
-	if len(resp.Values) == 0 {
-		fmt.Println("No data found.")
-	} else {
-		fmt.Println("No, 大項目")
-		for _, row := range resp.Values {
-			fmt.Printf("size=%d, %s, %s\n", len(row), row[0], row[1])
-		}
-	}
+	return resp
 }
