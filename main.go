@@ -6,14 +6,14 @@ import (
 	"log"
 
 	"github.com/atsushi-kitazawa/google_spreadsheet_tui_tool/google_auth"
-	"github.com/atsushi-kitazawa/google_spreadsheet_tui_tool/google_drive"
+	_ "github.com/atsushi-kitazawa/google_spreadsheet_tui_tool/google_drive"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/sheets/v4"
 )
 
 func main() {
-    google_drive.DriveSample()
-    return
+    //google_drive.DriveSample()
+    //return
 
         b, err := ioutil.ReadFile("sheet_credentials.json")
         if err != nil {
@@ -25,7 +25,7 @@ func main() {
         if err != nil {
                 log.Fatalf("Unable to parse client secret file to config: %v", err)
         }
-	client := google_auth.GetSheetClient(config)
+	client := google_auth.GetClient(config, "sheet_token.json")
 
         srv, err := sheets.New(client)
         if err != nil {
@@ -34,8 +34,9 @@ func main() {
 
         // Prints the names and majors of students in a sample spreadsheet:
         // https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-        spreadsheetId := "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"
-        readRange := "Class Data!A2:E2"
+        //spreadsheetId := "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"
+        spreadsheetId := "1LcZsixllj0hdoEErFniQLZJS5wYOeLj8HRHl1jx9Rok"
+        readRange := "管理!B5:I30"
         resp, err := srv.Spreadsheets.Values.Get(spreadsheetId, readRange).Do()
         if err != nil {
                 log.Fatalf("Unable to retrieve data from sheet: %v", err)
@@ -44,10 +45,9 @@ func main() {
         if len(resp.Values) == 0 {
                 fmt.Println("No data found.")
         } else {
-                fmt.Println("Name, Major:")
+                fmt.Println("No, 大項目")
                 for _, row := range resp.Values {
-                        // Print columns A and E, which correspond to indices 0 and 4.
-                        fmt.Printf("%s, %s\n", row[0], row[3])
+                        fmt.Printf("size=%d, %s, %s\n", len(row), row[0], row[1])
                 }
         }
 }

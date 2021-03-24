@@ -21,7 +21,7 @@ func DriveSample() {
         if err != nil {
                 log.Fatalf("Unable to parse client secret file to config: %v", err)
         }
-        client := google_auth.GetDriveClient(config)
+        client := google_auth.GetClient(config, "drive_token.json")
 
         srv, err := drive.New(client)
         if err != nil {
