@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 
 	"github.com/atsushi-kitazawa/google_spreadsheet_tui_tool/google_drive"
 	"github.com/atsushi-kitazawa/google_spreadsheet_tui_tool/google_sheet"
@@ -9,13 +10,12 @@ import (
 
 const credential = "sheet_credentials.json"
 const token = "sheet_token.json"
-const target = "google spreadsheet tui tool"
 
 func main() {
 	driveFile := google_drive.GetDriveFiles(10)
 	var spreadsheetId string
 	for _, f := range driveFile {
-		if target == f.Name {
+		if os.Args[1] == f.Name {
 			spreadsheetId = f.Id
 			break
 		}
